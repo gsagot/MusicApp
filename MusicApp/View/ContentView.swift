@@ -25,16 +25,37 @@ struct ContentView: View {
             ZStack(alignment:.top){
                 Rectangle()
                     .fill(.blue)
-                    .frame(height: 200)
+                    .frame(height: 120)
 
-                TextField("Search", text: $currentSearch, onCommit: {
-                    self.trackListVM.searchByName(self.currentSearch.trimmedAndEscaped())
-                })
-                    .font(.boldFont)
-                    .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 40, leading: 10, bottom: 0, trailing: 0))
+                HStack{
+                    TextField("Search", text: $currentSearch, onCommit: {
+                        self.trackListVM.searchByName(self.currentSearch.trimmedAndEscaped())
+                    })
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                    .font(.mediumFont)
+                    .background(.white)
+                    .foregroundColor(.blue)
+                    
+                    Spacer()
+                    
+                    Image(systemName:"magnifyingglass")
+                        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .font(.mediumFont)
+                        .foregroundColor(.white)
+                        .onTapGesture {
+                            self.trackListVM.searchByName(self.currentSearch.trimmedAndEscaped())
+                        }
+                    
+                }
+                    
             }
+            .padding(EdgeInsets(top: 40, leading: 0, bottom: 10, trailing: 0))
             .ignoresSafeArea()
+            
+            
+            Rectangle()
+                .fill(.blue)
+                .frame(height: 40)
             
             HStack {
                 Image(systemName: "backward.end.fill")

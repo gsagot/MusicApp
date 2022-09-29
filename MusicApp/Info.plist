@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MabryDeezer-Regular.ttf</string>
+		<string>MabryDeezer-Medium.ttf</string>
+		<string>MabryDeezer-Light.ttf</string>
+		<string>MabryDeezer-Bold.ttf</string>
+		<string>MabryDeezer-Black.ttf</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,12 @@
+
+.DS_Store
+MusicApp/.DS_Store
+MusicApp/ViewModel/.DS_Store
+MusicApp/View/.DS_Store
+MusicApp/Model/.DS_Store
+MusicApp/Shared/.DS_Store
+
+
+*.xcuserstate
+MusicApp.xcodeproj/project.xcworkspace/
+MusicApp.xcodeproj/xcuserdata/

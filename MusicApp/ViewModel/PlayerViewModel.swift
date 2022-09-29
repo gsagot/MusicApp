@@ -78,7 +78,7 @@ class PlayerViewModel {
             self.processAudioData(buffer: buffer)
             
         }
-        
+
         player.play()
         
     }

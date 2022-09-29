@@ -11,34 +11,87 @@ import SwiftUI
 struct ArtistListView: View {
     
     let track:TrackViewModel?
+    var playing:Bool = false
+    @State var image: String = "play.circle.fill"
+    @State var info: String = "play"
     
     var body: some View {
         VStack{
             HStack{
-                Text(track?.title ?? " ")
-                    .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
+                Text(track?.title.removeParentheses() ?? " ")
+                    .padding(10)
+                    .foregroundColor(.blue)
+                    .background(.white)
+
+                Spacer()
+                
+            }
+            HStack{
+                Text(track?.album.title.removeParentheses() ?? " ")
+                    .padding(10)
+                    .foregroundColor(.blue)
+                    .background(.white)
+               
                 Spacer()
             }
             HStack{
-                Text(track?.album.title ?? " ")
-                    .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
+                Text(track?.artist.name.removeParentheses() ?? " ")
+                    .padding(10)
+                    .foregroundColor(.blue)
+                    .background(.white)
+                    
                 Spacer()
             }
+            
             HStack{
-                Text(track?.artist.name ?? " ")
+                if playing {
+                    Image(systemName: "stop.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .onTapGesture {
+                            if playing {
+                                PlayerViewModel.shared.stop()
+                                image = "play.circle.fill"
+                                info = "play"
+                            }else {
+                                PlayerViewModel.shared.start(track?.preview ?? " " )
+                                image = "stop.circle.fill"
+                                info = "stop"
+                            }
+                           
+                        }
+                    
+                }else {
+                    Image(systemName: "play.circle.fill")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .onTapGesture {
+                            if playing {
+                                PlayerViewModel.shared.stop()
+                                image = "play.circle.fill"
+                                info = "play"
+                            }else {
+                                PlayerViewModel.shared.start(track?.preview ?? " " )
+                                image = "stop.circle.fill"
+                                info = "stop"
+                            }
+                           
+                        }
+                    
+                }
+
+                
+                
+                
+                Text(info)
                     .foregroundColor(.white)
-                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 0))
+                
                 Spacer()
             }
         
             Spacer()
         }
-
-        .onTapGesture {
-            PlayerViewModel.shared.start(track?.preview ?? " " )
-        }
+        
         .background(.blue)
 
     }

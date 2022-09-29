@@ -11,6 +11,7 @@ struct ContentView: View {
 
     @ObservedObject private var trackListVM = TrackListViewModel()
     @ObservedObject private var dataTap = PlayerViewModel.shared.signal
+    
     @State private var currentSearch: String = "Red Hot"
     @State private var offset = CGSize.zero
     
@@ -36,7 +37,7 @@ struct ContentView: View {
             .ignoresSafeArea()
             
           
-            ArtistListView(track: trackListVM.currentTrack)
+            ArtistListView(track: trackListVM.currentTrack, playing: dataTap.playing)
                 .offset(x: offset.width , y: 0)
                 .gesture(
                     DragGesture()

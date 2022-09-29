@@ -21,7 +21,7 @@ struct SpectogramView: View {
                         .fill(.white)
                         .frame(height: 1)
                         .scaleEffect(x:1,
-                                     y:CGFloat(i) * 1000,
+                                     y:CGFloat(i) * 800,
                                      anchor:UnitPoint(x: 1, y: 1) )
                     
                 }

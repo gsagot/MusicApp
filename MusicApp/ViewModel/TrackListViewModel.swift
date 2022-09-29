@@ -46,6 +46,7 @@ class TrackListViewModel:ObservableObject {
     
     func nextSong () {
         guard i < tracks.count - 1 else {return}
+        
         i += 1
         currentTrack = tracks[i]
     }

@@ -31,6 +31,7 @@ class PlayerViewModel {
             print(error)
         }
         
+        // Prevent device is not on silent and set audio sessions category to .playback
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback)
         } catch let error {
@@ -39,6 +40,8 @@ class PlayerViewModel {
         
     }
     
+    
+    // Download mp3 then start the player if download successed
     func start (_ string: String) {
         engine.mainMixerNode.removeTap(onBus: 0)
         PreviewService.shared.getAudioFile(string){ success, adress in
@@ -48,6 +51,7 @@ class PlayerViewModel {
         
     }
     
+    // Stop player
     func stop () {
         signal.reset()
         engine.mainMixerNode.removeTap(onBus: 0)
@@ -55,8 +59,9 @@ class PlayerViewModel {
         
     }
     
+    // start player
     private func play (url:URL) {
-
+        
         do {
             
             let audioFile = try AVAudioFile(forReading: url)
@@ -73,7 +78,7 @@ class PlayerViewModel {
             print(error.localizedDescription)
         }
         
-        
+        // audio tap on a bus to record, monitor, and observe the output of the node
         engine.mainMixerNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { (buffer, time) in
             self.processAudioData(buffer: buffer)
             

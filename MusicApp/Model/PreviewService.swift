@@ -8,7 +8,7 @@
 import Foundation
 
 
-
+// Singleton
 class PreviewService {
     
     static var shared = PreviewService()
@@ -19,6 +19,7 @@ class PreviewService {
     
     private init () {}
     
+    // Download mp3 file and move it in library
     func getAudioFile (_ adress:String, completionHandler: @escaping (Bool, URL?)-> Void ) {
         
         let url = URL(string: adress)

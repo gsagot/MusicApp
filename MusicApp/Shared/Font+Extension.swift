@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-
+// Deezer Fonts
 extension Font {
     static let boldFont = Font.custom("MabryDeezer-Black", size: Font.TextStyle.largeTitle.size, relativeTo: .caption)
     static let mediumFont = Font.custom("MabryDeezer-Black", size: Font.TextStyle.title2.size, relativeTo: .caption)

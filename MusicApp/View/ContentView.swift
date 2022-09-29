@@ -21,7 +21,7 @@ struct ContentView: View {
      
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ZStack(alignment:.top){
                 Rectangle()
                     .fill(.blue)
@@ -36,7 +36,27 @@ struct ContentView: View {
             }
             .ignoresSafeArea()
             
-          
+            HStack {
+                Image(systemName: "backward.end.fill")
+                    .padding(10)
+                    .onTapGesture {
+                        PlayerViewModel.shared.stop()
+                        trackListVM.previousSong()
+                    }
+                
+                
+                Image(systemName: "forward.end.fill")
+                    .padding(10)
+                    .onTapGesture {
+                        PlayerViewModel.shared.stop()
+                        trackListVM.nextSong()
+                    }
+            }
+            .bold()
+            .font(.title)
+            .foregroundColor(.white)
+            
+            
             ArtistListView(track: trackListVM.currentTrack, playing: dataTap.playing)
                 .offset(x: offset.width , y: 0)
                 .gesture(

@@ -20,7 +20,7 @@ class DeezerService {
     
     func getTrack (search: String, completionHandler: @escaping (Bool, SearchResult?)-> Void ) {
         
-        let url = URL(string: "https://api.deezer.com/search/track/?q=\(search)&index=0&limit=20&output=json")
+        let url = URL(string: "https://api.deezer.com/search/track/?q=\(search)&index=0&limit=60&output=json")
         
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"

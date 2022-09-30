@@ -11,11 +11,11 @@ import Foundation
 class TrackListViewModel:ObservableObject {
     
     
-    private var tracks = [TrackViewModel]()
-    
-    private var i = Int.zero
+    @Published var tracks = [TrackViewModel]()
     
     @Published var currentTrack: TrackViewModel?
+    
+    private var i = Int.zero
     
 
     func searchByName (_ name: String) {
@@ -63,7 +63,7 @@ class TrackListViewModel:ObservableObject {
 
 
 struct TrackViewModel {
-    
+
     let track : Track
     
     var id : Int { track.id }

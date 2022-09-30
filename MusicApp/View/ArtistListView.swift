@@ -16,86 +16,106 @@ struct ArtistListView: View {
     @State var info: String = "play"
     
     var body: some View {
-        VStack{
-            HStack{
-                Text(track?.title.removeParentheses() ?? " ")
-                    .padding(10)
-                    .foregroundColor(.blue)
-                    .background(.white)
-
-                Spacer()
+        
+        HStack{
+            ZStack (alignment:.bottom){
                 
-            }
-            HStack{
-                Text(track?.album.title.removeParentheses() ?? " ")
-                    .padding(10)
-                    .foregroundColor(.blue)
-                    .background(.white)
-               
-                Spacer()
-            }
-            HStack{
-                Text(track?.artist.name.removeParentheses() ?? " ")
-                    .padding(10)
-                    .foregroundColor(.blue)
-                    .background(.white)
-                    
-                Spacer()
-            }
-            
-            HStack{
-                if playing {
-                    Image(systemName: "stop.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .onTapGesture {
-                            if playing {
-                                PlayerViewModel.shared.stop()
-                                image = "play.circle.fill"
-                                info = "play"
-                            }else {
-                                PlayerViewModel.shared.start(track?.preview ?? " " )
-                                image = "stop.circle.fill"
-                                info = "stop"
-                            }
-                           
+                // Cover in background
+                HStack{
+                    AsyncImage(url: URL(string: track!.album.cover ) ){ phase in
+                        switch phase {
+                        case .success(let image):
+                            image.resizable()
+
+                        case .failure(_):
+                            Image(systemName: "questionmark")
+                                .symbolVariant(.circle)
+                                .font(.largeTitle)
+                        default:
+                            ProgressView()
                         }
-                    
-                }else {
-                    Image(systemName: "play.circle.fill")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                        .onTapGesture {
-                            if playing {
-                                PlayerViewModel.shared.stop()
-                                image = "play.circle.fill"
-                                info = "play"
-                            }else {
-                                PlayerViewModel.shared.start(track?.preview ?? " " )
-                                image = "stop.circle.fill"
-                                info = "stop"
-                            }
-                           
-                        }
+                        
+                        Spacer()
+                    }
                     
                 }
+                
+                VStack{
+                    // Title
+          
+                        Text(track?.title.removeParentheses() ?? " ")
+                            .bold()
 
+                        Text(track?.album.title.removeParentheses() ?? " ")
+                 
+                        Text(track?.artist.name.removeParentheses() ?? " ")
+                            
+
+                }
+                .padding(10)
+                .foregroundColor(.black)
+                .background(.white)
                 
-                
-                
-                Text(info)
-                    .foregroundColor(.white)
-                
-                Spacer()
+
             }
-        
-            Spacer()
+            
         }
-        
-        .background(.blue)
+        .background(.gray)
+        .onTapGesture {
+            PlayerViewModel.shared.start(track!.preview)
+            
+        }
 
+        
     }
     
     
 }
 
+/*
+ 
+ HStack{
+     if playing {
+         Image(systemName: "stop.circle.fill")
+             .font(.largeTitle)
+             .foregroundColor(.white)
+             .onTapGesture {
+                 if playing {
+                     PlayerViewModel.shared.stop()
+                     image = "play.circle.fill"
+                     info = "play"
+                 }else {
+                     PlayerViewModel.shared.start(track?.preview ?? " " )
+                     image = "stop.circle.fill"
+                     info = "stop"
+                 }
+                
+             }
+         
+     }else {
+         Image(systemName: "play.circle.fill")
+             .font(.largeTitle)
+             .foregroundColor(.white)
+             .onTapGesture {
+                 if playing {
+                     PlayerViewModel.shared.stop()
+                     image = "play.circle.fill"
+                     info = "play"
+                 }else {
+                     PlayerViewModel.shared.start(track?.preview ?? " " )
+                     image = "stop.circle.fill"
+                     info = "stop"
+                 }
+                
+             }
+         
+     }
+     
+     Text(info)
+         .foregroundColor(.white)
+     
+     Spacer()
+ }
+
+ Spacer()
+ */

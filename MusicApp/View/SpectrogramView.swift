@@ -12,25 +12,31 @@ struct SpectogramView: View {
     var array = [Float]()
     
     var body: some View {
-        VStack{
-            HStack(alignment: .bottom, spacing: 5){
-
-                ForEach(array, id: \.self ){ i in
+        GeometryReader { geo in
+            VStack{
+                Spacer()
+                HStack(alignment: .bottom, spacing: 5){
                     
-                    Rectangle()
-                        .fill(.white)
-                        .frame(height: 1)
-                        .scaleEffect(x:1,
-                                     y:CGFloat(i) * 800,
-                                     anchor:UnitPoint(x: 1, y: 1) )
+                    ForEach(array, id: \.self ){ i in
+                        
+                        
+            
+                        Rectangle()
+                            .fill(.white)
+                            .frame(height: 1)
+                            .scaleEffect(x:1,
+                                         y:CGFloat(i) * geo.frame(in: .global).height * 3,
+                                         anchor:UnitPoint(x: 1, y: 1) )
+                    }
                     
                 }
                 
             }
             
         }
+        
         .background(.black)
-  
+        
     }
     
     

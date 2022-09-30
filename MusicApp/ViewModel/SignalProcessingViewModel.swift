@@ -11,7 +11,9 @@ import Accelerate
 
 class SignalProcessingViewModel : ObservableObject{
     
-    @Published var audioData = [Float](repeating: 0.01, count: 4)
+    private var nb = 5
+    
+    @Published var audioData = [Float](repeating: 0.01, count: 5)
     
     @Published var playing:Bool = false
    
@@ -31,7 +33,7 @@ class SignalProcessingViewModel : ObservableObject{
     
     func reset(){
         self.playing = false
-        audioData = [Float](repeating: 0.01, count: 4)
+        audioData = [Float](repeating: 0.01, count: nb)
     }
     
 

@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    
     @ObservedObject private var trackListVM = TrackListViewModel()
     @ObservedObject private var dataTap = PlayerViewModel.shared.signal
+    
+    @State private var overText = false
     
     @State private var currentSearch: String = "Red Hot"
     @State private var offset = CGSize.zero
@@ -18,97 +20,78 @@ struct ContentView: View {
     init(){
         trackListVM.searchByName("Red Hot".trimmedAndEscaped())
     }
-     
+    
     
     var body: some View {
+        
         VStack(alignment: .leading) {
             ZStack(alignment:.top){
                 Rectangle()
-                    .fill(.blue)
-                    .frame(height: 120)
-
+                    .fill(.black)
+                
                 HStack{
                     TextField("Search", text: $currentSearch, onCommit: {
                         self.trackListVM.searchByName(self.currentSearch.trimmedAndEscaped())
                     })
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                    .font(.mediumFont)
-                    .background(.white)
-                    .foregroundColor(.blue)
                     
                     Spacer()
                     
                     Image(systemName:"magnifyingglass")
-                        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                        .font(.mediumFont)
-                        .foregroundColor(.white)
                         .onTapGesture {
                             self.trackListVM.searchByName(self.currentSearch.trimmedAndEscaped())
                         }
                     
                 }
-                    
-            }
-            .padding(EdgeInsets(top: 40, leading: 0, bottom: 10, trailing: 0))
-            .ignoresSafeArea()
-            
-            
-            Rectangle()
-                .fill(.blue)
-                .frame(height: 40)
-            
-            HStack {
-                Image(systemName: "backward.end.fill")
-                    .padding(10)
-                    .onTapGesture {
-                        PlayerViewModel.shared.stop()
-                        trackListVM.previousSong()
-                    }
                 
-                
-                Image(systemName: "forward.end.fill")
-                    .padding(10)
-                    .onTapGesture {
-                        PlayerViewModel.shared.stop()
-                        trackListVM.nextSong()
-                    }
             }
-            .bold()
-            .font(.title)
+            .font(.mediumFont)
             .foregroundColor(.white)
+            .ignoresSafeArea()
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 0))
+                 
             
-            
-            ArtistListView(track: trackListVM.currentTrack, playing: dataTap.playing)
-                .offset(x: offset.width , y: 0)
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            offset = gesture.translation
-                        }
-                        .onEnded { gesture in
-                            if offset.width > 0 {
-                                PlayerViewModel.shared.stop()
-                                trackListVM.previousSong()
-                            }
-                            else {
-                                PlayerViewModel.shared.stop()
-                                trackListVM.nextSong()
-                            }
-                            offset = CGSize.zero
+            ScrollView(.horizontal,showsIndicators: false ){
+                HStack(spacing:20){
+                    ForEach(trackListVM.tracks, id: \.id){track in
+                        GeometryReader { geo in
+                            
+                            ArtistListView(track: track, playing: dataTap.playing)
+                                .padding()
+                                .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).minX) / 12), axis: (x: 0, y: 1, z: 0))
+                                .frame(width: 200, height: 200)
+                                
+                            
+
+                          
                             
                         }
-                )
+                            .frame(width: 150, height: 200)
+    
+                    }
+                    
+                }
+                
+                
+            }
+            
+            
+            
             Spacer()
+            
             SpectogramView(array: dataTap.audioData)
         }
-        .background(.blue)
-       
+        .fixedSize(horizontal: false, vertical: false)
+        .background(.black)
+        .onAppear(){
+            PlayerViewModel.shared.clear()
+        }
+        
     }
     
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-            ContentView()
+        ContentView()
     }
 }
